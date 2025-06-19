@@ -1,0 +1,274 @@
+{
+  "exercises": {
+    "meditation": {
+      "name": "Meditación y Relajación",
+      "icon": "🧘‍♀️",
+      "description": "Ejercicios para reducir estrés y ansiedad",
+      "programs": [
+        {
+          "id": "basic_breathing",
+          "name": "Respiración Básica",
+          "duration": 300,
+          "description": "5 minutos de respiración guiada",
+          "pattern": [
+            { "action": "vibrate", "duration": 4, "intensity": "low" },
+            { "action": "pause", "duration": 4 },
+            { "action": "vibrate", "duration": 6, "intensity": "low" },
+            { "action": "pause", "duration": 2 }
+          ],
+          "cycles": 15,
+          "difficulty": "beginner"
+        },
+        {
+          "id": "deep_relaxation",
+          "name": "Relajación Profunda",
+          "duration": 600,
+          "description": "10 minutos de relajación muscular progresiva",
+          "pattern": [
+            { "action": "vibrate", "duration": 8, "intensity": "medium" },
+            { "action": "pause", "duration": 12 }
+          ],
+          "cycles": 30,
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "mindfulness",
+          "name": "Mindfulness",
+          "duration": 900,
+          "description": "15 minutos de atención plena",
+          "pattern": [
+            { "action": "vibrate", "duration": 3, "intensity": "low" },
+            { "action": "pause", "duration": 57 }
+          ],
+          "cycles": 15,
+          "difficulty": "advanced"
+        }
+      ]
+    },
+    "focus": {
+      "name": "Concentración y Productividad",
+      "icon": "🎯",
+      "description": "Técnicas para mejorar el enfoque",
+      "programs": [
+        {
+          "id": "pomodoro",
+          "name": "Pomodoro Tradicional",
+          "duration": 1500,
+          "description": "25 minutos de trabajo concentrado",
+          "pattern": [
+            { "action": "vibrate", "duration": 2, "intensity": "medium" },
+            { "action": "pause", "duration": 1498 }
+          ],
+          "cycles": 1,
+          "difficulty": "beginner"
+        },
+        {
+          "id": "flow_state",
+          "name": "Estado de Flujo",
+          "duration": 3600,
+          "description": "1 hora de concentración profunda",
+          "pattern": [
+            { "action": "vibrate", "duration": 1, "intensity": "low" },
+            { "action": "pause", "duration": 899 }
+          ],
+          "cycles": 4,
+          "difficulty": "advanced"
+        },
+        {
+          "id": "attention_training",
+          "name": "Entrenamiento de Atención",
+          "duration": 600,
+          "description": "10 minutos de ejercicios de concentración",
+          "pattern": [
+            { "action": "vibrate", "duration": 2, "intensity": "high" },
+            { "action": "pause", "duration": 8 },
+            { "action": "vibrate", "duration": 1, "intensity": "low" },
+            { "action": "pause", "duration": 19 }
+          ],
+          "cycles": 20,
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    "physical": {
+      "name": "Ejercicios Físicos",
+      "icon": "💪",
+      "description": "Rutinas de actividad física y estiramiento",
+      "programs": [
+        {
+          "id": "desk_breaks",
+          "name": "Pausas de Escritorio",
+          "duration": 180,
+          "description": "3 minutos de estiramiento cada hora",
+          "pattern": [
+            { "action": "vibrate", "duration": 5, "intensity": "medium" },
+            { "action": "pause", "duration": 25 }
+          ],
+          "cycles": 6,
+          "difficulty": "beginner"
+        },
+        {
+          "id": "posture_reminder",
+          "name": "Recordatorio de Postura",
+          "duration": 1800,
+          "description": "Alertas cada 30 minutos para corregir postura",
+          "pattern": [
+            { "action": "vibrate", "duration": 3, "intensity": "high" },
+            { "action": "pause", "duration": 1797 }
+          ],
+          "cycles": 1,
+          "difficulty": "beginner"
+        },
+        {
+          "id": "micro_exercises",
+          "name": "Micro Ejercicios",
+          "duration": 420,
+          "description": "7 minutos de ejercicios rápidos",
+          "pattern": [
+            { "action": "vibrate", "duration": 30, "intensity": "high" },
+            { "action": "pause", "duration": 10 },
+            { "action": "vibrate", "duration": 20, "intensity": "medium" },
+            { "action": "pause", "duration": 30 }
+          ],
+          "cycles": 7,
+          "difficulty": "intermediate"
+        }
+      ]
+    },
+    "therapy": {
+      "name": "Terapia y Bienestar",
+      "icon": "🌱",
+      "description": "Ejercicios terapéuticos para salud mental",
+      "programs": [
+        {
+          "id": "anxiety_relief",
+          "name": "Alivio de Ansiedad",
+          "duration": 480,
+          "description": "8 minutos para reducir síntomas de ansiedad",
+          "pattern": [
+            { "action": "vibrate", "duration": 4, "intensity": "low" },
+            { "action": "pause", "duration": 4 },
+            { "action": "vibrate", "duration": 6, "intensity": "low" },
+            { "action": "pause", "duration": 6 }
+          ],
+          "cycles": 24,
+          "difficulty": "beginner"
+        },
+        {
+          "id": "grounding_technique",
+          "name": "Técnica de Conexión a Tierra",
+          "duration": 300,
+          "description": "5 minutos para conectar con el presente",
+          "pattern": [
+            { "action": "vibrate", "duration": 5, "intensity": "medium" },
+            { "action": "pause", "duration": 15 },
+            { "action": "vibrate", "duration": 5, "intensity": "medium" },
+            { "action": "pause", "duration": 35 }
+          ],
+          "cycles": 5,
+          "difficulty": "intermediate"
+        },
+        {
+          "id": "sleep_preparation",
+          "name": "Preparación para Dormir",
+          "duration": 900,
+          "description": "15 minutos de relajación antes de dormir",
+          "pattern": [
+            { "action": "vibrate", "duration": 6, "intensity": "low" },
+            { "action": "pause", "duration": 24 },
+            { "action": "vibrate", "duration": 4, "intensity": "low" },
+            { "action": "pause", "duration": 56 }
+          ],
+          "cycles": 10,
+          "difficulty": "beginner"
+        }
+      ]
+    },
+    "custom": {
+      "name": "Programas Personalizados",
+      "icon": "⚙️",
+      "description": "Crea tus propios patrones de vibración",
+      "programs": [
+        {
+          "id": "user_defined",
+          "name": "Definido por Usuario",
+          "duration": 0,
+          "description": "Personaliza completamente tu rutina",
+          "pattern": [],
+          "cycles": 1,
+          "difficulty": "advanced",
+          "customizable": true
+        }
+      ]
+    }
+  },
+  "intensities": {
+    "low": {
+      "name": "Suave",
+      "value": 1,
+      "description": "Vibración muy ligera, apenas perceptible"
+    },
+    "medium": {
+      "name": "Moderada",
+      "value": 2,
+      "description": "Vibración claramente perceptible pero no molesta"
+    },
+    "high": {
+      "name": "Fuerte",
+      "value": 3,
+      "description": "Vibración intensa y clara"
+    }
+  },
+  "presets": {
+    "quick_start": [
+      {
+        "name": "Inicio Rápido - Respiración",
+        "exercise_id": "basic_breathing",
+        "category": "meditation"
+      },
+      {
+        "name": "Inicio Rápido - Pomodoro",
+        "exercise_id": "pomodoro", 
+        "category": "focus"
+      },
+      {
+        "name": "Inicio Rápido - Pausa",
+        "exercise_id": "desk_breaks",
+        "category": "physical"
+      }
+    ],
+    "daily_routine": [
+      {
+        "time": "08:00",
+        "exercise_id": "mindfulness",
+        "category": "meditation",
+        "name": "Mindfulness Matutino"
+      },
+      {
+        "time": "12:00",
+        "exercise_id": "desk_breaks",
+        "category": "physical",
+        "name": "Pausa de Mediodía"
+      },
+      {
+        "time": "15:00",
+        "exercise_id": "pomodoro",
+        "category": "focus",
+        "name": "Sesión de Tarde"
+      },
+      {
+        "time": "22:00",
+        "exercise_id": "sleep_preparation",
+        "category": "therapy",
+        "name": "Preparación Nocturna"
+      }
+    ]
+  },
+  "settings": {
+    "default_intensity": "medium",
+    "auto_progress": true,
+    "notifications": true,
+    "sound_enabled": false,
+    "haptic_feedback": true
+  }
+}
