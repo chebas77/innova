@@ -37,30 +37,47 @@ function App() {
   };
 
   const sendCommand = async (command) => {
+    if (!isConnected) {
+      setStatus('Error: ESP32 no conectado');
+      return false;
+    }
+
     try {
+      console.log(`🔥 Enviando comando de vibración: ${command}`);
       const response = await fetch('http://localhost:3001/api/vibration', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ command })
+        body: JSON.stringify({ command: command.toString() })
       });
       
       const data = await response.json();
+      console.log('✅ Respuesta del servidor:', data);
+      
       if (data.success) {
-        setStatus(`Comando ${command} enviado`);
-        setLastActivity(`Vibración ${command === '1' ? 'activada' : 'desactivada'} - ${new Date().toLocaleTimeString()}`);
+        setStatus(`✅ Comando ${command} enviado correctamente`);
+        setLastActivity(`Vibración ${command === '1' ? 'ACTIVADA ⚡' : 'DESACTIVADA ⏹️'} - ${new Date().toLocaleTimeString()}`);
+        return true;
       } else {
-        setStatus(`Error: ${data.error}`);
+        setStatus(`❌ Error: ${data.error || 'Comando no enviado'}`);
+        return false;
       }
     } catch (error) {
-      setStatus('Error de conexión');
-      console.error(error);
+      setStatus('❌ Error de conexión con el backend');
+      console.error('Error enviando comando:', error);
+      return false;
     }
   };
 
   const sendTimer = async (seconds) => {
+    if (!isConnected) {
+      setStatus('Error: ESP32 no conectado');
+      return false;
+    }
+
     try {
+      console.log(`⏱️ Enviando temporizador: ${seconds} segundos`);
       const response = await fetch('http://localhost:3001/api/timer', {
         method: 'POST',
         headers: {
@@ -70,36 +87,66 @@ function App() {
       });
       
       const data = await response.json();
+      console.log('✅ Respuesta del temporizador:', data);
+      
       if (data.success) {
-        setStatus(`Temporizador iniciado: ${seconds}s`);
+        setStatus(`⏱️ Temporizador iniciado: ${seconds}s`);
         setLastActivity(`Temporizador ${seconds}s iniciado - ${new Date().toLocaleTimeString()}`);
         setCustomTimer('');
+        return true;
       } else {
-        setStatus(`Error: ${data.error}`);
+        setStatus(`❌ Error: ${data.error || 'Temporizador no enviado'}`);
+        return false;
       }
     } catch (error) {
-      setStatus('Error de conexión');
-      console.error(error);
+      setStatus('❌ Error de conexión con el backend');
+      console.error('Error enviando temporizador:', error);
+      return false;
     }
   };
 
   const executeExercise = async (exercise) => {
-    setStatus(`Ejecutando: ${exercise.name}`);
+    setStatus(`🏃‍♂️ Ejecutando: ${exercise.name}`);
     setLastActivity(`Ejercicio "${exercise.name}" iniciado - ${new Date().toLocaleTimeString()}`);
     
-    // Enviar la duración total del ejercicio al ESP32
-    await sendTimer(exercise.duration);
+    // Convertir la duración del ejercicio a segundos
+    let durationInSeconds = exercise.duration; // Valor por defecto
+    
+    if (typeof exercise.duration === 'string') {
+      // Extraer números de strings como "2-3 minutos", "30 segundos", etc.
+      const match = exercise.duration.match(/(\d+)/);
+      if (match) {
+        const firstNumber = parseInt(match[1]);
+        if (exercise.duration.includes('minuto')) {
+          durationInSeconds = firstNumber * 60; // Convertir minutos a segundos
+        } else {
+          durationInSeconds = firstNumber; // Ya en segundos
+        }
+      } else {
+        durationInSeconds = 120; // 2 minutos por defecto
+      }
+    }
+    
+    // Primero encender vibración por 1 segundo para indicar inicio
+    const success = await sendCommand('1');
+    if (success) {
+      setTimeout(async () => {
+        await sendCommand('0');
+        // Luego enviar el temporizador completo del ejercicio
+        await sendTimer(durationInSeconds);
+      }, 1000);
+    }
   };
 
   const reconnect = async () => {
     try {
-      setStatus('Reconectando...');
+      setStatus('🔄 Reconectando...');
       const response = await fetch('http://localhost:3001/api/reconnect', {
         method: 'POST'
       });
       setTimeout(checkConnection, 2000);
     } catch (error) {
-      setStatus('Error al reconectar');
+      setStatus('❌ Error al reconectar');
     }
   };
 
@@ -107,6 +154,18 @@ function App() {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+  };
+
+  // 🧪 Función de prueba rápida
+  const testVibration = async () => {
+    console.log('🧪 Iniciando prueba de vibración...');
+    const success1 = await sendCommand('1');
+    if (success1) {
+      setTimeout(async () => {
+        console.log('🧪 Apagando vibración...');
+        await sendCommand('0');
+      }, 2000);
+    }
   };
 
   return (
@@ -187,7 +246,22 @@ function App() {
                   <span className="btn-icon">⏹️</span>
                   Vibración OFF
                 </button>
+                <button 
+                  onClick={testVibration}
+                  className="btn btn-primary"
+                  disabled={!isConnected}
+                >
+                  <span className="btn-icon">🔔</span>
+                  Pulso 2s
+                </button>
               </div>
+              
+              {/* 🚨 Panel de debug */}
+              {isConnected && (
+                <div className="debug-panel">
+                  <small>🔍 Debug: Abre la consola (F12) para ver los logs detallados</small>
+                </div>
+              )}
             </div>
 
             {/* Temporizadores rápidos */}
@@ -323,7 +397,8 @@ function App() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>
+        {`
         .app {
           min-height: 100vh;
           width: 100vw;
@@ -521,6 +596,19 @@ function App() {
           display: flex;
           gap: 12px;
           flex-wrap: wrap;
+        }
+
+        .debug-panel {
+          margin-top: 15px;
+          padding: 10px;
+          background: #f0f9ff;
+          border-radius: 8px;
+          border-left: 4px solid #0ea5e9;
+        }
+
+        .debug-panel small {
+          color: #0369a1;
+          font-weight: 500;
         }
 
         .btn {
@@ -874,7 +962,8 @@ function App() {
             grid-template-columns: repeat(3, 1fr);
           }
         }
-      `}</style>
+      `}
+      </style>
     </div>
   );
 }
